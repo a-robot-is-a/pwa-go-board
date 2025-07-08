@@ -41,7 +41,23 @@
       		return fetch(config.server_url);})
     		.then(response => response.text())
     		.then(svg => {document.getElementById("svg-board").innerHTML = svg;})
-    		.catch(err => {document.getElementById("svg-board").innerHTML = "<p>SVG konnte nicht geladen werden.</p>";});
+    		.catch(err => {document.getElementById("svg-board").innerHTML = `
+    		<div style="
+      			max-width: 400px;
+      			margin: 1em auto;
+      			padding: 1em;
+      			background-color: #fff0e6;
+      			color: #994d00;
+      			border-radius: 10px;
+      			font-family: sans-serif;
+      			box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      			text-align: center;">
+      			<h3 style="margin-top: 0;">No connection to the board</h3>
+      			<p>The SVG could not be loaded at the moment.</p>
+      			<p>The server address in Second Life may have been changed.</p>
+      			<p>The developer will notice this soon...  please try again later.</p>
+    		</div>
+      		`;});
 	</script>
 </body>
 </html>
