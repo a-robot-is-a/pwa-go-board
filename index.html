@@ -35,12 +35,13 @@
 	<div id="svg-board"></div>
 
 	<script>
-		fetch("https://simhost-09199fe80494e9474.agni.secondlife.io:12043/cap/c998fe86-cd8b-17c4-2269-2f3d62af4439")
-  		.then(r => r.text())
-  		.then(svg => {
-    		document.getElementById("svg-board").innerHTML = svg;})
-  		.catch(err => {
-    		document.getElementById("svg-board").innerHTML = "<p>SVG konnte nicht geladen werden.</p>";});
+  		fetch("config.json")
+    		.then(response => response.json())
+    		.then(config => {
+      		return fetch(config.server_url);})
+    		.then(response => response.text())
+    		.then(svg => {document.getElementById("svg-board").innerHTML = svg;})
+    		.catch(err => {document.getElementById("svg-board").innerHTML = "<p>SVG konnte nicht geladen werden.</p>";});
 	</script>
 </body>
 </html>
