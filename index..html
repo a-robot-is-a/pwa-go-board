@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+	<style>
+  		body {
+    		margin: 0;
+    		padding: 0;
+    		background: #fff8dc;
+    		display: flex;
+    		justify-content: center;
+    		align-items: center;
+    		height: 100vh;
+  		}
+
+  		#svg-board svg {
+    		width: 95vw;
+    		height: auto;
+    		max-width: 400px;
+    		box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    		background: #f5deb3;
+    		border-radius: 8px;
+  		}
+
+  		p {
+    		font-family: sans-serif;
+    		color: #444;
+    		text-align: center;
+  		}
+	</style>
+</head>
+<body>
+	<div id="svg-board"></div>
+
+	<script>
+		fetch("https://simhost-09199fe80494e9474.agni.secondlife.io:12043/cap/c998fe86-cd8b-17c4-2269-2f3d62af4439")
+  		.then(r => r.text())
+  		.then(svg => {
+    		document.getElementById("svg-board").innerHTML = svg;})
+  		.catch(err => {
+    		document.getElementById("svg-board").innerHTML = "<p>SVG konnte nicht geladen werden.</p>";});
+	</script>
+</body>
+</html>
