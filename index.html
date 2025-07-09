@@ -34,13 +34,13 @@
 <body>
 	<div id="svg-board"></div>
 
+	<script>
+  let lastSeen = 0; // Zuletzt bekannter Zeitstempel
 
-<script>
   function ladeSVG() {
     fetch("config.json")
       .then(response => response.json())
       .then(config => {
-        // Cache-Buster durch Zeitstempel
         return fetch(config.server_url + "?v=" + Date.now());
       })
       .then(response => {
@@ -71,11 +71,30 @@
       });
   }
 
-  // Initialer Ladevorgang beim Start
+  function prüfeUpdate() {
+    fetch("config.json")
+      .then(r => r.json())
+      .then(config => {
+        return fetch(config.server_url + "?timestamp");
+      })
+      .then(r => r.text())
+      .then(ts => {
+        const stamp = parseInt(ts);
+        if (stamp > lastSeen) {
+          lastSeen = stamp;
+          ladeSVG(); // Nur neu laden bei Änderung
+        }
+      })
+      .catch(err => {
+        // Optional: Log oder Anzeige bei Verbindungsfehler
+      });
+  }
+
+  // Initialer Ladevorgang
   ladeSVG();
 
-  // Alle 60 Sekunden erneut laden
-  const refreshInterval = setInterval(ladeSVG, 60000);
+  // Regelmäßig nur den Zeitstempel prüfen
+  setInterval(prüfeUpdate, 5000); // alle 5 Sek.
 </script>
 
 </body>
