@@ -87,18 +87,14 @@
       })
       .catch(err => {
         // Optional: Log oder Anzeige bei Verbindungsfehler
-        console.warn("Zeitstempel-Abfrage fehlgeschlagen:", err);
       });
   }
 
-  function startUpdateCheck() {
-    prüfeUpdate();
-    setTimeout(startUpdateCheck, 5000); // alle 5 Sekunden erneut prüfen
-  }
-
-  // Initialer Ladevorgang und Start der Update-Schleife
+  // Initialer Ladevorgang
   ladeSVG();
-  startUpdateCheck();
+
+  // Regelmäßig nur den Zeitstempel prüfen
+  setInterval(prüfeUpdate, 5000); // alle 5 Sek.
 </script>
 
 </body>
