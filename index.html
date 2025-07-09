@@ -44,7 +44,7 @@
         return fetch(config.server_url + "?v=" + Date.now());
       })
       .then(response => {
-        if (!response.ok) throw new Error("Server nicht erreichbar");
+        if (!response.ok) throw new Error("Server not reachable");
         return response.text();
       })
       .then(svg => {
@@ -62,10 +62,10 @@
             font-family: sans-serif;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             text-align: center;">
-            <h3 style="margin-top: 0;">Spielbrett nicht verfügbar</h3>
+            <h3 style="margin-top: 0;">Game board not available</h3>
             <p>Das Brett konnte momentan nicht geladen werden.</p>
-            <p>Möglicherweise wurde die SL-Serveradresse geändert oder der Server ist offline.</p>
-            <p>Die App versucht es automatisch erneut.</p>
+            <p>The server address may have been changed or the server is offline.</p>
+            <p>The app tries again automatically.</p>
           </div>
         `;
       });
