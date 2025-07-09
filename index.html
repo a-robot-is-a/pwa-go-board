@@ -34,7 +34,7 @@
 <body>
 	<div id="svg-board"></div>
 
-	<script>
+<script>
   let lastSeen = 0; // Zuletzt bekannter Zeitstempel
 
   function ladeSVG() {
@@ -87,14 +87,18 @@
       })
       .catch(err => {
         // Optional: Log oder Anzeige bei Verbindungsfehler
+        console.warn("Zeitstempel-Abfrage fehlgeschlagen:", err);
       });
   }
 
-  // Initialer Ladevorgang
-  ladeSVG();
+  function startUpdateCheck() {
+    prüfeUpdate();
+    setTimeout(startUpdateCheck, 5000); // alle 5 Sekunden erneut prüfen
+  }
 
-  // Regelmäßig nur den Zeitstempel prüfen
-  setInterval(prüfeUpdate, 5000); // alle 5 Sek.
+  // Initialer Ladevorgang und Start der Update-Schleife
+  ladeSVG();
+  startUpdateCheck();
 </script>
 
 </body>
