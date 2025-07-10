@@ -1,11 +1,13 @@
-name: Deploy GitHub Page
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
+
 permissions:
   contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -30,12 +32,12 @@ jobs:
         env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
 
+      - name: Inhalt von config.js
+        run: cat config.js
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./pwa-go-board
-
-      - name: Inhalt von config.js
-        run: cat config.js
-
+          force_orphan: true
