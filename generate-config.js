@@ -10,7 +10,7 @@ if (!serverURL) {
 }
 
 const configContent = `window.SERVER_ADDRESS = "${serverURL}";`;
-const targetPath = path.join(__dirname, 'pwa-go-board', 'config.js');
+const targetPath = path.join(__dirname, 'config.js');
 
 fs.writeFileSync(targetPath, configContent);
 console.log("✅ config.js erfolgreich nach pwa-go-board geschrieben.");
