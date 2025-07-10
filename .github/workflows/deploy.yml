@@ -13,16 +13,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Erzeuge config.json mit geheimer URL
-  run: |
-    echo "{ \"server_url\": \"$SERVER_URL\" }" > config.json
-  env:
-    SERVER_URL: ${{ secrets.SERVER_URL }}
+        run: |
+          echo "{ \"server_url\": \"$SERVER_URL\" }" > config.json
+        env:
+          SERVER_URL: ${{ secrets.SERVER_URL }}
 
+      # Optional: Hier kannst du deine PWA bauen, z. B.:
+      # - run: npm install && npm run build
 
-      # Optional: Falls du ein dist- oder build-Verzeichnis hast
-        - name: Build App (falls nötig)
-        run: npm install && npm run build
-
-      # Hier deinen Deployment-Befehl einfügen
+      # Deploy-Schritt (z. B. FTP, SCP, rsync, etc.)
       - name: Deploy App
-        run: echo "Deploy läuft... (hier kommt dein Upload)"
+        run: echo "Deploy läuft... (hier kommt dein echter Upload-Befehl)"
