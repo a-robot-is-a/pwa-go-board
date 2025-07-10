@@ -36,6 +36,9 @@ jobs:
       - name: 📁 Kopiere config.json ins dist-Verzeichnis
         run: mv config.json dist/config.json
 
+      - name: Zeige Inhalt von dist/
+        run: ls -l dist
+
       - name: 🚫 Deaktiviere Jekyll für GitHub Pages
         run: touch dist/.nojekyll
 
