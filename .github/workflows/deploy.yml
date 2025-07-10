@@ -17,10 +17,8 @@ jobs:
           node-version: '18'
 
       - name: Config generieren
-        run: |
-          npm install
-          node generate-config.js
-        env:
+        run: node generate-config.js
+        env: 
           SERVER_URL: ${{ secrets.SERVER_URL }}
 
       - name: Liste der Dateien
