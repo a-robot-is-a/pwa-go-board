@@ -1,25 +1,16 @@
 const fs = require('fs');
+const path = require('path');
 
-// Umgebungsvariable auslesen
 const serverURL = process.env.SERVER_URL;
-
-// Debug-Ausgabe für GitHub Actions Log
 console.log("DEBUG: serverURL =", serverURL);
 
-// Prüfung: Ist die URL gesetzt?
 if (!serverURL) {
-  console.error("❌ SERVER_URL ist nicht gesetzt! Abbruch.");
+  console.error("❌ SERVER_URL ist nicht gesetzt!");
   process.exit(1);
 }
 
-// Inhalt der Datei erstellen
 const configContent = `window.SERVER_ADDRESS = "${serverURL}";`;
+const targetPath = path.join(__dirname, 'pwa-go-board', 'config.js');
 
-// Datei im aktuellen Verzeichnis speichern
-try {
-  fs.writeFileSync('config.js', configContent);
-  console.log("✅ config.js erfolgreich geschrieben.");
-} catch (error) {
-  console.error("❌ Fehler beim Schreiben der Datei:", error);
-  process.exit(1);
-}
+fs.writeFileSync(targetPath, configContent);
+console.log("✅ config.js erfolgreich nach pwa-go-board geschrieben.");
