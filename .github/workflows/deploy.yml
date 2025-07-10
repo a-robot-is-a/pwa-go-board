@@ -25,6 +25,11 @@ jobs:
       - name: Liste der Dateien
         run: ls -la
 
+      - name: Debug SERVER_URL
+        run: echo "SERVER_URL:$SERVER_URL"
+        env:
+          SERVER_URL: ${{ secrets.SERVER_URL }}
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
