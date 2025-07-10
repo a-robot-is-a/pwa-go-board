@@ -1,54 +1,28 @@
-name: Deploy to GitHub Pages
+name: Build & Deploy PWA
+
 on:
   push:
     branches: [main]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: 📦 Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
+      - name: Erzeuge config.json mit geheimer URL
+  run: |
+    echo "{ \"server_url\": \"$SERVER_URL\" }" > config.json
+  env:
+    SERVER_URL: ${{ secrets.SERVER_URL }}
 
-      - name: 📥 Install Dependencies
-        run: npm ci
 
-      - name: 🔨 Build App
-        run: npm run build
+      # Optional: Falls du ein dist- oder build-Verzeichnis hast
+        - name: Build App (falls nötig)
+        run: npm install && npm run build
 
-      - name: 🔐 Erzeuge config.json mit geheimer URL
-        run: |
-          echo "{ \"server_url\": \"$SERVER_URL\" }" > config.json
-        env:
-          SERVER_URL: ${{ secrets.SERVER_URL }}
-
-      - name: 📁 Kopiere config.json ins dist-Verzeichnis
-        run: mv config.json dist/config.json
-
-      - name: Zeige Inhalt von dist/
-        run: ls -l dist
-
-      - name: 🚫 Deaktiviere Jekyll für GitHub Pages
-        run: touch dist/.nojekyll
-
-      - name: ⚙️ Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: 📤 Upload dist/ als Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-      - name: 🚀 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # Hier deinen Deployment-Befehl einfügen
+      - name: Deploy App
+        run: echo "Deploy läuft... (hier kommt dein Upload)"
