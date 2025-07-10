@@ -1,26 +1,30 @@
-name: Build & Deploy PWA
+name: Deploy GitHub Page
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Erzeuge config.json mit geheimer URL
+      - name: Node installieren
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Config generieren
         run: |
-          echo "{ \"server_url\": \"$SERVER_URL\" }" > config.json
+          npm install
+          node generate-config.js
         env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
 
-      # Optional: Hier kannst du deine PWA bauen, z. B.:
-      # - run: npm install && npm run build
-
-      # Deploy-Schritt (z. B. FTP, SCP, rsync, etc.)
-      - name: Deploy App
-        run: echo "Deploy läuft... (hier kommt dein echter Upload-Befehl)"
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
