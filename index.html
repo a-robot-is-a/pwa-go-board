@@ -1,84 +1,82 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.webmanifest">
-	<style>
-  		body {
-    		margin: 0;
-    		padding: 0;
-    		background: #fff8dc;
-    		display: flex;
-    		justify-content: center;
-    		align-items: center;
-    		height: 100vh;
-  		}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff8dc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-  		#svg-board svg {
-    		width: 95vw;
-    		height: auto;
-    		max-width: 400px;
-    		box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    		background: #f5deb3;
-    		border-radius: 8px;
-  		}
+    #svg-board svg {
+      width: 95vw;
+      height: auto;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      background: #f5deb3;
+      border-radius: 8px;
+    }
 
-  		p {
-    		font-family: sans-serif;
-    		color: #444;
-    		text-align: center;
-  		}
-	</style>
+    p {
+      font-family: sans-serif;
+      color: #444;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-	<div id="svg-board"></div>
+  <div id="svg-board"></div>
 
-	<script src="./config.js"></script>
-<script>
-  let lastSeen = 0;
+  <script type="module">
+    const serverURL = import.meta.env.VITE_SERVER_URL;
+    let lastSeen = 0;
 
-  function ladeSVG() {
-    const url = window.SERVER_ADDRESS + "?v=" + Date.now();
+    function ladeSVG() {
+      const url = `${serverURL}?v=${Date.now()}`;
 
-    fetch(url)
-      .then(response => {
-        if (!response.ok) throw new Error("Server not reachable");
-        return response.text();
-      })
-      .then(svg => {
-        document.getElementById("svg-board").innerHTML = svg;
-      })
-      .catch(err => {
-        document.getElementById("svg-board").innerHTML = `
-          <div style="...">Server error message</div>
-        `;
-      });
-  }
+      fetch(url)
+        .then(response => {
+          if (!response.ok) throw new Error("Server not reachable");
+          return response.text();
+        })
+        .then(svg => {
+          document.getElementById("svg-board").innerHTML = svg;
+        })
+        .catch(err => {
+          document.getElementById("svg-board").innerHTML = `
+            <div style="font-family:sans-serif;color:#600;text-align:center;padding:1em;">
+              Fehler: Server nicht erreichbar
+            </div>
+          `;
+        });
+    }
 
-  function prüfeUpdate() {
-    const url = window.SERVER_ADDRESS + "?timestamp";
+    function prüfeUpdate() {
+      const url = `${serverURL}?timestamp`;
 
-    fetch(url)
-      .then(r => r.text())
-      .then(ts => {
-        const stamp = parseInt(ts);
-        if (stamp > lastSeen) {
-          lastSeen = stamp;
-          ladeSVG();
-        }
-      })
-      .catch(err => {
-        // Optional: Logging
-      });
-  }
+      fetch(url)
+        .then(r => r.text())
+        .then(ts => {
+          const stamp = parseInt(ts);
+          if (stamp > lastSeen) {
+            lastSeen = stamp;
+            ladeSVG();
+          }
+        })
+        .catch(err => {
+          // Optional: Logging
+        });
+    }
 
-  // Initialer Ladevorgang
-  ladeSVG();
-
-  // Regelmäßiger Check
-  setInterval(prüfeUpdate, 5000);
-</script>
-
+    ladeSVG();
+    setInterval(prüfeUpdate, 5000);
+  </script>
 </body>
 </html>
