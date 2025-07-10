@@ -21,28 +21,20 @@ jobs:
         with:
           node-version: '18'
 
-      - name: ⚙️ Config generieren
-        run: node generate-config.js
-        env: 
-          SERVER_URL: ${{ secrets.SERVER_URL }}
+      - name: 📦 Dependencies installieren
+        run: npm ci
 
-      - name: 📂 Verzeichnisinhalt prüfen
-        run: ls -la
-
-      - name: 🔍 Debug SERVER_URL
-        run: echo "SERVER_URL:$SERVER_URL"
+      - name: ⚙️ Build ausführen mit Secret
+        run: npm run build
         env:
-          SERVER_URL: ${{ secrets.SERVER_URL }}
-
-      - name: 📄 Inhalt von config.js
-        run: cat config.js
+          VITE_SERVER_URL: ${{ secrets.SERVER_URL }}
 
       - name: 🚫 Jekyll deaktivieren (.nojekyll)
-        run: touch .nojekyll
+        run: touch dist/.nojekyll
 
       - name: 🚀 Deploy zu GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
+          publish_dir: ./dist
           force_orphan: true
