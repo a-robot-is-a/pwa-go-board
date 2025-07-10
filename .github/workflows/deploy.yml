@@ -23,6 +23,9 @@ jobs:
         env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
 
+      - name: Liste der Dateien
+        run: ls -la pwa-go-board
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
