@@ -13,37 +13,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: 📦 Checkout Repository
+      - name:  Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 🔧 Setup Node.js
+      - name:  Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      - name: 📥 Install Dependencies
+      - name:  Install Dependencies
         run: npm ci
 
-      - name: 🔨 Build App
+      - name:  Build App
         run: npm run build
 
-      - name: 🔐 Erzeuge config.json mit geheimer URL
+      - name:  Erzeuge config.json mit geheimer URL
         run: |
           echo "{ \"server_url\": \"$SERVER_URL\" }" > config.json
         env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
 
-      - name: 📁 Kopiere config.json ins dist-Verzeichnis
+      - name:  Kopiere config.json ins dist-Verzeichnis
         run: mv config.json dist/config.json
 
-      - name: ⚙️ Setup Pages
+      - name:  Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: 📤 Upload dist/ als Artifact
+      - name:  Upload dist/ als Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
-      - name: 🚀 Deploy to GitHub Pages
+      - name:  Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
