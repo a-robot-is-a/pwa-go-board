@@ -3,4 +3,4 @@ const fs = require('fs');
 const serverURL = process.env.SERVER_URL;
 
 const configContent = `window.SERVER_ADDRESS = "${serverURL}";`;
-fs.writeFileSync('docs/config.js', configContent);
+fs.writeFileSync('pwa-go-board/config.js', configContent);
