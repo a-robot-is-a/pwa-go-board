@@ -35,3 +35,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./pwa-go-board
+
+      - name: Inhalt von config.js
+        run: cat config.js
+
