@@ -1,9 +1,12 @@
 {
   "name": "pwa-go-board",
   "version": "1.0.0",
-  "description": "Progressive Web App ! - to display a Go board",
+  "description": "Progressive Web App to display a Go board",
   "main": "index.js",
   "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,10 +14,13 @@
     "url": "https://github.com/a-robot-is-a/pwa-go-board"
   },
   "keywords": [],
-  "author": "npm install vite",
+  "author": "Peter",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/a-robot-is-a/pwa-go-board/issues"
   },
-  "homepage": "https://github.com/a-robot-is-a/pwa-go-board"
+  "homepage": "https://github.com/a-robot-is-a/pwa-go-board",
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
 }
