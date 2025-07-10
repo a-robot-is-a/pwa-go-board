@@ -34,7 +34,7 @@ jobs:
           SERVER_URL: ${{ secrets.SERVER_URL }}
 
       - name:  Kopiere config.json ins dist-Verzeichnis
-        run: mv config.json dist/config.json
+        run: mv config.json pwa-go-board/config.json
 
       - name:  Setup Pages
         uses: actions/configure-pages@v5
