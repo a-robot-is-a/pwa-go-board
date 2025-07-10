@@ -38,7 +38,7 @@
   let lastSeen = 0; // Zuletzt bekannter Zeitstempel
 
   function ladeSVG() {
-    fetch("config.json")
+    fetch('./config.json')
       .then(response => response.json())
       .then(config => {
         return fetch(config.server_url + "?v=" + Date.now());
