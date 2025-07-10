@@ -18,9 +18,12 @@ jobs:
         env:
           SERVER_URL: ${{ secrets.SERVER_URL }}
 
-      # Optional: Hier kannst du deine PWA bauen, z. B.:
-      # - run: npm install && npm run build
+      - name: Kopiere config.json ins dist-Verzeichnis
+        run: mkdir -p dist && mv config.json dist/config.json
 
-      # Deploy-Schritt (z. B. FTP, SCP, rsync, etc.)
+      # Optional: Hier kannst du deine PWA bauen
+      # - name: Build App
+      #   run: npm install && npm run build
+
       - name: Deploy App
         run: echo "Deploy läuft... (hier kommt dein echter Upload-Befehl)"
