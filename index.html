@@ -72,7 +72,7 @@
   }
 
   function prüfeUpdate() {
-    fetch("./config.json")
+    fetch("/pwa-go-board/config.json")
       .then(r => r.json())
       .then(config => {
         return fetch(config.server_url + "?timestamp");
