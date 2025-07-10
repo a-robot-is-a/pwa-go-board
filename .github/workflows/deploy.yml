@@ -1,1 +1,24 @@
+name: Build & Deploy PWA
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Erzeuge config.json mit geheimer URL
+        run: echo "{ \"server_url\": \"${{ secrets.SERVER_URL }}\" }" > config.json
+
+      # Optional: Hier kannst du deine PWA bauen, z. B.:
+      # - run: npm install && npm run build
+
+      # Deploy-Schritt (z. B. FTP, SCP, rsync, etc.)
+      - name: Deploy App
+        run: echo "Deploy läuft... (hier kommt dein echter Upload-Befehl)"
 
