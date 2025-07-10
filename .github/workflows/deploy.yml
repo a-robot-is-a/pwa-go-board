@@ -21,10 +21,10 @@ jobs:
         with:
           node-version: '18'
 
-      - name: 📦 Dependencies installieren
+      - name: 📦 Abhängigkeiten installieren
         run: npm ci
 
-      - name: ⚙️ Build ausführen mit Secret
+      - name: ⚙️ Vite-Build mit Secret einbetten
         run: npm run build
         env:
           VITE_SERVER_URL: ${{ secrets.SERVER_URL }}
