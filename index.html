@@ -34,15 +34,14 @@
 <body>
 	<div id="svg-board"></div>
 
+<script src="./config.js"></script>
 <script>
-  let lastSeen = 0; // Zuletzt bekannter Zeitstempel
+  let lastSeen = 0;
 
   function ladeSVG() {
-    fetch('./config.json')
-      .then(response => response.json())
-      .then(config => {
-        return fetch(config.server_url + "?v=" + Date.now());
-      })
+    const url = window.SERVER_ADDRESS + "?v=" + Date.now();
+
+    fetch(url)
       .then(response => {
         if (!response.ok) throw new Error("Server not reachable");
         return response.text();
@@ -52,49 +51,33 @@
       })
       .catch(err => {
         document.getElementById("svg-board").innerHTML = `
-          <div style="
-            max-width: 400px;
-            margin: 1em auto;
-            padding: 1em;
-            background-color: #fff0e6;
-            color: #994d00;
-            border-radius: 10px;
-            font-family: sans-serif;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;">
-            <h3 style="margin-top: 0;">Game board not available</h3>
-            <p>The board could not be loaded at the moment.</p>
-            <p>The server address may have been changed or the server is offline.</p>
-            <p>The app tries again automatically.</p>
-          </div>
+          <div style="...">Server error message</div>
         `;
       });
   }
 
   function prüfeUpdate() {
-    fetch("/pwa-go-board/config.json")
-      .then(r => r.json())
-      .then(config => {
-        return fetch(config.server_url + "?timestamp");
-      })
+    const url = window.SERVER_ADDRESS + "?timestamp";
+
+    fetch(url)
       .then(r => r.text())
       .then(ts => {
         const stamp = parseInt(ts);
         if (stamp > lastSeen) {
           lastSeen = stamp;
-          ladeSVG(); // Nur neu laden bei Änderung
+          ladeSVG();
         }
       })
       .catch(err => {
-        // Optional: Log oder Anzeige bei Verbindungsfehler
+        // Optional: Logging
       });
   }
 
   // Initialer Ladevorgang
   ladeSVG();
 
-  // Regelmäßig nur den Zeitstempel prüfen
-  setInterval(prüfeUpdate, 5000); // alle 5 Sek.
+  // Regelmäßiger Check
+  setInterval(prüfeUpdate, 5000);
 </script>
 
 </body>
